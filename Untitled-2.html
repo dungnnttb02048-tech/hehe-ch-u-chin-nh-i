@@ -1,0 +1,772 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cháu xin lỗi chú 🌿</title>
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600;700&family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --green-soft: #a8d5ba;
+      --green-main: #5b9a6f;
+      --green-deep: #3d7a52;
+      --mint: #c8e6c9;
+      --sage: #d4e8d4;
+      --cream: #f7faf5;
+      --leaf: #7cb98a;
+      --text: #2f4a38;
+      --text-light: #5a7a65;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: linear-gradient(135deg, #eef7f0 0%, #e0f0e4 30%, #d4ebda 60%, #e8f5e9 100%);
+      background-size: 200% 200%;
+      animation: bgShift 22s ease-in-out infinite;
+      font-family: 'Quicksand', sans-serif;
+      overflow: hidden;
+      position: relative;
+      will-change: background-position;
+    }
+
+    @keyframes bgShift {
+      0%, 100% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+    }
+
+    #particle-canvas {
+      position: fixed;
+      inset: 0;
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    .orb {
+      position: fixed;
+      border-radius: 50%;
+      filter: blur(48px);
+      opacity: 0.32;
+      z-index: 0;
+      pointer-events: none;
+      will-change: transform;
+      animation: orbFloat 16s ease-in-out infinite;
+    }
+
+    .orb1 { width: 300px; height: 300px; background: #a8d5ba; top: -100px; left: -80px; }
+    .orb2 { width: 240px; height: 240px; background: #b2dfdb; bottom: -80px; right: -50px; animation-delay: -5s; }
+    .orb3 { width: 180px; height: 180px; background: #c8e6c9; top: 35%; left: 8%; animation-delay: -9s; }
+    .orb4 { width: 200px; height: 200px; background: #dcedc8; top: 15%; right: 12%; animation-delay: -3s; }
+
+    @keyframes orbFloat {
+      0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
+      33% { transform: translate3d(22px, -28px, 0) scale(1.06); }
+      66% { transform: translate3d(-16px, 18px, 0) scale(0.97); }
+    }
+
+    .card-wrapper {
+      perspective: 1400px;
+      z-index: 20;
+      position: relative;
+    }
+
+    .card {
+      width: min(92vw, 500px);
+      background: rgba(255, 255, 255, 0.8);
+      backdrop-filter: blur(20px) saturate(1.25);
+      -webkit-backdrop-filter: blur(20px) saturate(1.25);
+      border-radius: 36px;
+      padding: 42px 34px;
+      box-shadow: 
+        0 22px 55px rgba(91, 154, 111, 0.16),
+        0 0 0 1px rgba(255, 255, 255, 0.8),
+        inset 0 1px 1px rgba(255, 255, 255, 0.95);
+      text-align: center;
+      transform-style: preserve-3d;
+      will-change: transform;
+      transition: transform 0.12s ease-out;
+      position: relative;
+      animation: cardIn 1.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+      opacity: 0;
+      transform: translate3d(0, 48px, 0) scale(0.96);
+    }
+
+    @keyframes cardIn {
+      to { opacity: 1; transform: translate3d(0, 0, 0) scale(1); }
+    }
+
+    .card::before {
+      content: '';
+      position: absolute;
+      inset: -2px;
+      border-radius: 38px;
+      background: linear-gradient(125deg, #a8d5ba, #7cb98a, #b2dfdb, #c8e6c9, #a8d5ba);
+      background-size: 300% 300%;
+      z-index: -1;
+      animation: borderFlow 9s linear infinite;
+      opacity: 0.6;
+      will-change: background-position;
+    }
+
+    @keyframes borderFlow {
+      0% { background-position: 0% 50%; }
+      100% { background-position: 300% 50%; }
+    }
+
+    .card::after {
+      content: '';
+      position: absolute;
+      top: 0; left: -120%;
+      width: 50%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.22), transparent);
+      transform: skewX(-18deg);
+      animation: shine 7s ease-in-out infinite;
+      pointer-events: none;
+      border-radius: 36px;
+    }
+
+    @keyframes shine {
+      0%, 50% { left: -120%; }
+      70%, 100% { left: 140%; }
+    }
+
+    .emoji-top {
+      font-size: 58px;
+      margin-bottom: 10px;
+      display: inline-block;
+      animation: floatEmoji 3.4s ease-in-out infinite;
+      filter: drop-shadow(0 5px 8px rgba(91, 154, 111, 0.22));
+      will-change: transform;
+    }
+
+    @keyframes floatEmoji {
+      0%, 100% { transform: translate3d(0, 0, 0) rotate(-3deg); }
+      50% { transform: translate3d(0, -11px, 0) rotate(3deg); }
+    }
+
+    h1 {
+      font-family: 'Dancing Script', cursive;
+      font-size: 2.6rem;
+      background: linear-gradient(135deg, #3d7a52, #5b9a6f 55%, #6aa87a);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 6px;
+      letter-spacing: 0.4px;
+    }
+
+    .subtitle {
+      font-size: 0.96rem;
+      color: var(--text-light);
+      margin-bottom: 22px;
+      font-weight: 500;
+    }
+
+    .dots {
+      display: flex;
+      gap: 9px;
+      justify-content: center;
+      margin-bottom: 16px;
+    }
+
+    .dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #c5e0c8;
+      transition: all 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .dot.active {
+      background: linear-gradient(135deg, #5b9a6f, #7cb98a);
+      transform: scale(1.35);
+      box-shadow: 0 0 10px rgba(91, 154, 111, 0.4);
+    }
+
+    .message-box {
+      background: linear-gradient(160deg, #f7faf5 0%, #eef7f0 100%);
+      border-radius: 22px;
+      padding: 24px 22px;
+      margin-bottom: 26px;
+      min-height: 195px;
+      text-align: left;
+      box-shadow: 
+        inset 0 2px 10px rgba(91, 154, 111, 0.05),
+        0 1px 0 rgba(255,255,255,0.9);
+      border: 1px solid rgba(168, 213, 186, 0.45);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .message-box::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, #a8d5ba, #7cb98a, #b2dfdb, #a8d5ba);
+      background-size: 200% 100%;
+      animation: barFlow 4.5s linear infinite;
+    }
+
+    @keyframes barFlow {
+      0% { background-position: 0% 0; }
+      100% { background-position: 200% 0; }
+    }
+
+    #typed-text {
+      font-size: 1.06rem;
+      line-height: 1.8;
+      color: var(--text);
+      white-space: pre-wrap;
+      font-weight: 500;
+    }
+
+    .cursor {
+      display: inline-block;
+      width: 2.5px;
+      height: 1.15em;
+      background: linear-gradient(to bottom, #5b9a6f, #7cb98a);
+      margin-left: 2px;
+      vertical-align: text-bottom;
+      border-radius: 2px;
+      animation: blink 0.85s step-end infinite;
+    }
+
+    @keyframes blink { 50% { opacity: 0; } }
+
+    .btn-group {
+      display: flex;
+      flex-direction: column;
+      gap: 13px;
+      align-items: center;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 9px;
+      padding: 14px 32px;
+      border: none;
+      border-radius: 50px;
+      font-family: 'Quicksand', sans-serif;
+      font-size: 1.04rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.3s ease;
+      position: relative;
+      overflow: hidden;
+      will-change: transform;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #5b9a6f 0%, #4a8a5e 50%, #6aa87a 100%);
+      background-size: 200% 200%;
+      color: white;
+      box-shadow: 0 9px 24px rgba(91, 154, 111, 0.32);
+      animation: btnGradient 5.5s ease infinite;
+    }
+
+    @keyframes btnGradient {
+      0%, 100% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-3px) scale(1.025);
+      box-shadow: 0 13px 30px rgba(91, 154, 111, 0.42);
+    }
+
+    .btn-primary:active { transform: translateY(0) scale(0.98); }
+
+    .btn-secondary {
+      background: rgba(255,255,255,0.93);
+      color: var(--green-deep);
+      border: 2px solid #a8d5ba;
+      box-shadow: 0 4px 14px rgba(168, 213, 186, 0.28);
+    }
+
+    .btn-secondary:hover {
+      background: #f0f7f1;
+      transform: translateY(-2px);
+      border-color: #7cb98a;
+    }
+
+    .music-btn {
+      width: 54px;
+      height: 54px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #7cb98a, #5b9a6f);
+      color: white;
+      font-size: 23px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 6px 18px rgba(91, 154, 111, 0.32);
+      border: none;
+      cursor: pointer;
+      transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+      will-change: transform;
+    }
+
+    .music-btn:hover { transform: scale(1.08) rotate(8deg); }
+
+    .music-btn.playing {
+      animation: musicPulse 1.6s ease-in-out infinite;
+    }
+
+    @keyframes musicPulse {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(91, 154, 111, 0.4); }
+      50% { box-shadow: 0 0 0 14px rgba(91, 154, 111, 0); }
+    }
+
+    .footer {
+      margin-top: 24px;
+      font-size: 0.9rem;
+      color: var(--text-light);
+      font-weight: 500;
+    }
+
+    .footer span {
+      font-family: 'Dancing Script', cursive;
+      font-size: 1.28rem;
+      background: linear-gradient(135deg, #3d7a52, #5b9a6f);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .burst {
+      position: fixed;
+      pointer-events: none;
+      z-index: 100;
+      font-size: 20px;
+      will-change: transform, opacity;
+      animation: burstOut 1.15s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+
+    @keyframes burstOut {
+      0% { transform: translate3d(0,0,0) scale(0.25) rotate(0deg); opacity: 1; }
+      100% { transform: translate3d(var(--tx), var(--ty), 0) scale(1.2) rotate(var(--rot)); opacity: 0; }
+    }
+
+    .side-deco {
+      position: fixed;
+      font-size: 24px;
+      opacity: 0.2;
+      z-index: 5;
+      animation: sideFloat 10s ease-in-out infinite;
+      pointer-events: none;
+      will-change: transform;
+    }
+
+    @keyframes sideFloat {
+      0%, 100% { transform: translate3d(0, 0, 0) rotate(0deg); }
+      50% { transform: translate3d(0, -24px, 0) rotate(10deg); }
+    }
+
+    .leaf {
+      position: fixed;
+      font-size: 20px;
+      opacity: 0.18;
+      z-index: 4;
+      pointer-events: none;
+      will-change: transform, opacity;
+      animation: leafFall linear infinite;
+    }
+
+    @keyframes leafFall {
+      0% { transform: translate3d(0, -40px, 0) rotate(0deg); opacity: 0; }
+      8% { opacity: 0.22; }
+      92% { opacity: 0.18; }
+      100% { transform: translate3d(30px, 100vh, 0) rotate(320deg); opacity: 0; }
+    }
+
+    @media (max-width: 520px) {
+      .card { padding: 30px 18px; }
+      h1 { font-size: 2.1rem; }
+      .message-box { padding: 18px 15px; min-height: 175px; }
+      #typed-text { font-size: 0.98rem; }
+      .emoji-top { font-size: 48px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="orb orb1"></div>
+  <div class="orb orb2"></div>
+  <div class="orb orb3"></div>
+  <div class="orb orb4"></div>
+
+  <canvas id="particle-canvas"></canvas>
+
+  <div class="side-deco" style="top:12%; left:5%; animation-delay:0s;">🌿</div>
+  <div class="side-deco" style="top:32%; left:3%; animation-delay:-2.5s;">🍃</div>
+  <div class="side-deco" style="top:58%; left:6%; animation-delay:-5s;">✨</div>
+  <div class="side-deco" style="top:18%; right:5%; animation-delay:-1s;">🌱</div>
+  <div class="side-deco" style="top:42%; right:3%; animation-delay:-3.5s;">💚</div>
+  <div class="side-deco" style="top:68%; right:6%; animation-delay:-6s;">🍀</div>
+
+  <div class="card-wrapper">
+    <div class="card" id="main-card">
+      <div class="emoji-top">🌿🙏</div>
+      <h1>Cháu xin lỗi chú</h1>
+      <p class="subtitle">Lời xin lỗi chân thành từ tận đáy lòng</p>
+
+      <div class="dots" id="dots">
+        <div class="dot active"></div>
+        <div class="dot"></div>
+        <div class="dot"></div>
+      </div>
+
+      <div class="message-box">
+        <span id="typed-text"></span><span class="cursor" id="cursor"></span>
+      </div>
+
+      <div class="btn-group">
+        <button class="btn btn-primary" id="forgive-btn">
+          💚 Chú tha thứ cho cháu nhé
+        </button>
+        <button class="btn btn-secondary" id="more-btn">
+          🍃 Đọc tiếp lời cháu muốn nói
+        </button>
+        <button class="music-btn" id="music-btn" title="Bật / Tắt nhạc">
+          🎵
+        </button>
+      </div>
+
+      <p class="footer">
+        Với tất cả tấm lòng của <span>cháu</span> 🌱
+      </p>
+    </div>
+  </div>
+
+  <audio id="bg-music" loop>
+    <source src="https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf07a.mp3?filename=soft-background-music-112846.mp3" type="audio/mpeg">
+  </audio>
+
+  <script>
+    const messages = [
+`Chú ơi...
+
+Cháu biết cháu đã làm chú buồn và thất vọng.
+Cháu xin lỗi chú rất nhiều, từ tận đáy lòng.
+
+Những lời nói và việc làm của cháu có thể đã khiến chú phải suy nghĩ và phiền lòng. Cháu thật sự không muốn như vậy.`,
+
+`Cháu rất trân trọng chú.
+Chú luôn là người quan trọng và đặc biệt đối với cháu.
+Cháu không muốn làm mất đi sự tin tưởng và tình cảm mà chú dành cho cháu.
+
+Cháu xin lỗi vì đã chưa đủ chín chắn, chưa đủ quan tâm và chưa biết cách thể hiện đúng mực.`,
+
+`Cháu hứa sẽ cố gắng hơn rất nhiều.
+Sẽ lắng nghe chú nhiều hơn, sẽ cư xử đúng mực và trưởng thành hơn.
+
+Cháu mong chú cho cháu một cơ hội để sửa sai và chứng minh.
+Cháu rất quý trọng chú... 💚`
+    ];
+
+    let currentMsg = 0;
+    let isTyping = false;
+    let typeTimer = null;
+
+    const typedEl = document.getElementById('typed-text');
+    const forgiveBtn = document.getElementById('forgive-btn');
+    const moreBtn = document.getElementById('more-btn');
+    const musicBtn = document.getElementById('music-btn');
+    const bgMusic = document.getElementById('bg-music');
+    const card = document.getElementById('main-card');
+    const dots = document.querySelectorAll('.dot');
+
+    // Typing mượt hơn với timing tự nhiên
+    function typeMessage(text, callback) {
+      if (typeTimer) clearTimeout(typeTimer);
+      isTyping = true;
+      typedEl.textContent = '';
+      let i = 0;
+
+      function type() {
+        if (i < text.length) {
+          typedEl.textContent += text.charAt(i);
+          i++;
+          const char = text.charAt(i - 1);
+          let delay = 22 + Math.random() * 18;
+          if (char === '\n') delay = 140;
+          else if ('.!?'.includes(char)) delay = 120;
+          else if (','.includes(char)) delay = 70;
+          typeTimer = setTimeout(type, delay);
+        } else {
+          isTyping = false;
+          if (callback) callback();
+        }
+      }
+      type();
+    }
+
+    function updateDots() {
+      dots.forEach((d, idx) => d.classList.toggle('active', idx === currentMsg));
+    }
+
+    setTimeout(() => typeMessage(messages[0]), 850);
+
+    moreBtn.addEventListener('click', () => {
+      if (isTyping) return;
+      currentMsg = (currentMsg + 1) % messages.length;
+      updateDots();
+      typeMessage(messages[currentMsg]);
+      createBurst(moreBtn, 10);
+    });
+
+    forgiveBtn.addEventListener('click', () => {
+      createBigBurst();
+      createLeavesBurst();
+      
+      forgiveBtn.innerHTML = '🥰 Cảm ơn chú rất nhiều!';
+      forgiveBtn.style.background = 'linear-gradient(135deg, #6aa87a, #4a8a5e, #7cb98a)';
+      
+      setTimeout(() => {
+        typeMessage(`Cảm ơn chú đã cho cháu cơ hội 💚
+
+Cháu sẽ giữ lời hứa của mình.
+Cháu sẽ cố gắng để không làm chú thất vọng nữa.
+
+Cháu rất quý trọng chú... rất nhiều luôn! 🌿🌱`);
+        currentMsg = 0;
+        updateDots();
+      }, 420);
+    });
+
+    let isPlaying = false;
+    musicBtn.addEventListener('click', () => {
+      if (isPlaying) {
+        bgMusic.pause();
+        musicBtn.textContent = '🎵';
+        musicBtn.classList.remove('playing');
+      } else {
+        bgMusic.play().catch(() => {});
+        musicBtn.textContent = '🔊';
+        musicBtn.classList.add('playing');
+      }
+      isPlaying = !isPlaying;
+      createBurst(musicBtn, 7);
+    });
+
+    // ===== 3D Tilt mượt với lerp =====
+    let targetRotateX = 0, targetRotateY = 0;
+    let currentRotateX = 0, currentRotateY = 0;
+    const wrapper = document.querySelector('.card-wrapper');
+
+    wrapper.addEventListener('mousemove', (e) => {
+      const rect = card.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      targetRotateX = ((y - rect.height / 2) / (rect.height / 2)) * -6.5;
+      targetRotateY = ((x - rect.width / 2) / (rect.width / 2)) * 6.5;
+    });
+
+    wrapper.addEventListener('mouseleave', () => {
+      targetRotateX = 0;
+      targetRotateY = 0;
+    });
+
+    function smoothTilt() {
+      currentRotateX += (targetRotateX - currentRotateX) * 0.12;
+      currentRotateY += (targetRotateY - currentRotateY) * 0.12;
+      card.style.transform = `rotateX(${currentRotateX.toFixed(2)}deg) rotateY(${currentRotateY.toFixed(2)}deg)`;
+      requestAnimationFrame(smoothTilt);
+    }
+    smoothTilt();
+
+    // ===== Particle System tối ưu & mượt =====
+    const canvas = document.getElementById('particle-canvas');
+    const ctx = canvas.getContext('2d', { alpha: true });
+    let particles = [];
+    let mouse = { x: -9999, y: -9999 };
+    let lastTime = 0;
+
+    function resizeCanvas() {
+      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+      canvas.width = window.innerWidth * dpr;
+      canvas.height = window.innerHeight * dpr;
+      canvas.style.width = window.innerWidth + 'px';
+      canvas.style.height = window.innerHeight + 'px';
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    }
+    resizeCanvas();
+    window.addEventListener('resize', resizeCanvas);
+
+    class Particle {
+      constructor(x, y) {
+        this.x = x;
+        this.y = y;
+        this.size = Math.random() * 3.2 + 1.1;
+        this.speedX = (Math.random() - 0.5) * 0.9;
+        this.speedY = Math.random() * -1.2 - 0.35;
+        this.life = 1;
+        this.decay = Math.random() * 0.0055 + 0.003;
+        const hues = [118, 132, 142, 152, 105];
+        this.hue = hues[Math.floor(Math.random() * hues.length)];
+        this.angle = Math.random() * Math.PI * 2;
+        this.spin = (Math.random() - 0.5) * 0.06;
+      }
+
+      update(dt) {
+        const factor = dt / 16.67; // normalize to ~60fps
+        this.x += this.speedX * factor;
+        this.y += this.speedY * factor;
+        this.angle += this.spin * factor;
+        this.life -= this.decay * factor;
+        this.speedY += 0.006 * factor;
+      }
+
+      draw() {
+        if (this.life <= 0.02) return;
+        ctx.save();
+        ctx.globalAlpha = this.life * 0.7;
+        ctx.translate(this.x, this.y);
+        ctx.rotate(this.angle);
+        ctx.fillStyle = `hsla(${this.hue}, 42%, 52%, ${this.life})`;
+        ctx.beginPath();
+        ctx.ellipse(0, 0, this.size * 1.35, this.size * 0.65, 0, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.restore();
+      }
+    }
+
+    function animateParticles(timestamp) {
+      const dt = Math.min(timestamp - lastTime, 32); // cap delta
+      lastTime = timestamp;
+
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      // spawn mượt
+      if (particles.length < 48 && Math.random() < 0.28) {
+        particles.push(new Particle(Math.random() * window.innerWidth, window.innerHeight + 8));
+      }
+
+      for (let i = particles.length - 1; i >= 0; i--) {
+        const p = particles[i];
+        // tương tác chuột nhẹ
+        const dx = mouse.x - p.x;
+        const dy = mouse.y - p.y;
+        const dist = Math.sqrt(dx * dx + dy * dy);
+        if (dist < 120 && dist > 0) {
+          p.speedX += (dx / dist) * 0.035;
+          p.speedY += (dy / dist) * 0.035;
+        }
+        p.update(dt);
+        p.draw();
+        if (p.life <= 0 || p.y < -40) {
+          particles.splice(i, 1);
+        }
+      }
+
+      requestAnimationFrame(animateParticles);
+    }
+
+    document.addEventListener('mousemove', (e) => {
+      mouse.x = e.clientX;
+      mouse.y = e.clientY;
+      if (Math.random() < 0.1) {
+        particles.push(new Particle(e.clientX, e.clientY));
+      }
+    });
+
+    requestAnimationFrame(animateParticles);
+
+    // Floating leaves
+    function createFloatingLeaves() {
+      for (let i = 0; i < 9; i++) {
+        const leaf = document.createElement('div');
+        leaf.className = 'leaf';
+        leaf.textContent = ['🍃', '🌿', '🍂', '🌱'][Math.floor(Math.random() * 4)];
+        leaf.style.left = Math.random() * 100 + 'vw';
+        leaf.style.animationDuration = (12 + Math.random() * 14) + 's';
+        leaf.style.animationDelay = Math.random() * 11 + 's';
+        leaf.style.fontSize = (15 + Math.random() * 13) + 'px';
+        document.body.appendChild(leaf);
+      }
+    }
+    createFloatingLeaves();
+
+    function createBurst(el, count = 10) {
+      const rect = el.getBoundingClientRect();
+      const cx = rect.left + rect.width / 2;
+      const cy = rect.top + rect.height / 2;
+      const emojis = ['🌿', '🍃', '💚', '✨', '🌱', '🍀'];
+
+      for (let i = 0; i < count; i++) {
+        const h = document.createElement('div');
+        h.className = 'burst';
+        h.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+        h.style.left = cx + 'px';
+        h.style.top = cy + 'px';
+        const angle = (i / count) * Math.PI * 2 + Math.random() * 0.25;
+        const dist = 60 + Math.random() * 75;
+        h.style.setProperty('--tx', Math.cos(angle) * dist + 'px');
+        h.style.setProperty('--ty', Math.sin(angle) * dist + 'px');
+        h.style.setProperty('--rot', (Math.random() * 260) + 'deg');
+        h.style.fontSize = (14 + Math.random() * 12) + 'px';
+        document.body.appendChild(h);
+        setTimeout(() => h.remove(), 1200);
+      }
+    }
+
+    function createBigBurst() {
+      const cx = window.innerWidth / 2;
+      const cy = window.innerHeight / 2;
+      const emojis = ['🌿', '🍃', '💚', '🌱', '🍀', '✨', '🪴'];
+
+      for (let i = 0; i < 32; i++) {
+        const h = document.createElement('div');
+        h.className = 'burst';
+        h.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+        h.style.left = cx + 'px';
+        h.style.top = cy + 'px';
+        const angle = Math.random() * Math.PI * 2;
+        const dist = 65 + Math.random() * 180;
+        h.style.setProperty('--tx', Math.cos(angle) * dist + 'px');
+        h.style.setProperty('--ty', Math.sin(angle) * dist - 35 + 'px');
+        h.style.setProperty('--rot', (Math.random() * 500 - 250) + 'deg');
+        h.style.fontSize = (15 + Math.random() * 18) + 'px';
+        document.body.appendChild(h);
+        setTimeout(() => h.remove(), 1250);
+      }
+    }
+
+    function createLeavesBurst() {
+      const colors = ['#a8d5ba', '#7cb98a', '#c8e6c9', '#b2dfdb', '#dcedc8'];
+      for (let i = 0; i < 36; i++) {
+        const conf = document.createElement('div');
+        conf.style.cssText = `
+          position: fixed;
+          width: ${5 + Math.random() * 6}px;
+          height: ${5 + Math.random() * 6}px;
+          background: ${colors[Math.floor(Math.random() * colors.length)]};
+          left: ${Math.random() * 100}vw;
+          top: -12px;
+          border-radius: ${Math.random() > 0.45 ? '50%' : '2px'};
+          z-index: 90;
+          pointer-events: none;
+          opacity: 0.85;
+          will-change: transform, opacity;
+        `;
+        document.body.appendChild(conf);
+        const duration = 2.3 + Math.random() * 1.6;
+        const xMove = (Math.random() - 0.5) * 160;
+        conf.animate([
+          { transform: 'translate3d(0,0,0) rotate(0deg)', opacity: 0.88 },
+          { transform: `translate3d(${xMove}px, ${window.innerHeight + 30}px, 0) rotate(${Math.random() * 500}deg)`, opacity: 0 }
+        ], {
+          duration: duration * 1000,
+          easing: 'cubic-bezier(0.25, 0.46, 0.45, 0.94)'
+        }).onfinish = () => conf.remove();
+      }
+    }
+  </script>
+</body>
+</html>
